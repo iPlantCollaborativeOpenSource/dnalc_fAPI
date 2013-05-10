@@ -138,6 +138,6 @@ samtools sort $bam.unsorted.bam $bam
 samtools index $bam.bam
 
 
-rm -rf $bam.unsorted.bam bin tmp *.fa* *.bam *.gtf 
+rm -rf $bam.unsorted.bam bin tmp *.fa* *.bam *.gtf $sam
 
 
