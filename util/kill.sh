@@ -1,4 +1,11 @@
 #!/bin/bash
+if [[ ! $USER ]];then
+    read -p "iPlant username: " USER
+fi
+
+if [[ ! $TOKEN ]];then
+    read -s -p "iPlant password: " TOKEN
+fi
 
 for job in "$@"
 do
