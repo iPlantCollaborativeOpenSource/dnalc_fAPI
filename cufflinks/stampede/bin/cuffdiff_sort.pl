@@ -29,12 +29,17 @@ while (<DEF>) {
 }
 close DEF;
 
+open INDEX, ">$path/cuffdiff_out/summary.txt" or die $!;
+
 my $idx;
 for my $pair (@pairs) {
     $idx++;
     screen_file("$path/cuffdiff_out/gene_exp.diff",0,1,0,"$path/cuffdiff_out", "genes_$idx\_summary",0,@$pair);
     screen_file("$path/cuffdiff_out/isoform_exp.diff",0,1,0,"$path/cuffdiff_out", "transcripts_$idx\_summary",1,@$pair);
 }
+
+close INDEX;
+
 
 sub format_p_val {
     my $p = shift;
@@ -78,11 +83,13 @@ sub screen_file {
 
     open TXT,  ">$outfile.csv"  or die $!;
     open HTML, ">$outfile.html" or die $!; 
-    open INDEX, ">>$outpath/summary.txt" or die $!;
+
+    chomp(my $file_base = `basename $outfile.csv .csv`);
+    print INDEX join("\t","$file_base.csv","$file_base.html",$s1,$s2), "\n";
 
     print TXT join(',', @header), "\n";
     close TXT;
-    open  TXT , "| sort $index | perl -pe 's/\t/,/g' >>$outfile.csv";#|perl -pe 's/,\.,/,,/' >>$outfile.csv";
+    open  TXT , "| sort $index | perl -pe 's/\t/,/g' >>$outfile.csv";
 
     open IN, $infile or die $!;
     my ($out,@out);
@@ -117,7 +124,6 @@ sub screen_file {
 	$out .= join ("\t","GENE:$gene",$locus,sprintf("%.2f",$fold_change),$direction,sprintf("%.2f",($hi+$lo)),$p_val);
 	print "NO p value! $out\n" unless $p_val;
 
-	print INDEX join("\t","$outfile.csv","$outfile.html",@line[4,5]), "\n";
 	if (defined $desc{$gene}) {
 	    $out .= "\t$desc{$gene}\n";
 	}
