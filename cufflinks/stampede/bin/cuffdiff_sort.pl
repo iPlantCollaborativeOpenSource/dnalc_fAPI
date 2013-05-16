@@ -187,7 +187,7 @@ END
 	print HTML $_;
     }
     
-    print HTML <<"END";
+    print HTML <<'END';
    </tbody>
   </table>
   <script language="Javascript" type="text/javascript">
