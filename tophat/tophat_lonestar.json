@@ -1,5 +1,5 @@
 {
-    "name": "dnalc-tophat-lonestar-test",
+    "name": "dnalc-tophat-lonestar",
     "parallelism": "serial",
     "version": "2.0.8",
     "helpURI": "http://tophat.cbcb.umd.edu/",
