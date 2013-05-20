@@ -1,5 +1,5 @@
 {
-    "name": "dnalc-cufflinks-lonestar-test",
+    "name": "dnalc-cufflinks-lonestar",
     "parallelism": "serial",
     "version": "2.1.1",
     "helpURI": "http://cufflinks.cbcb.umd.edu/",
