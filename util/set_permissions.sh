@@ -16,5 +16,5 @@ if ! [[ -n $user ]];then
   exit
 fi
 
-curl -X POST -u ":$TOKEN" -d "username=${user}&permission=ALL" \
+curl -X POST -u "$IPLANTUSER:$TOKEN" -d "username=${user}&permission=ALL" \
 https://foundation.iplantcollaborative.org/apps-v1/apps/$app/share |json_xs

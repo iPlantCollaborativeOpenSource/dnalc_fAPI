@@ -18,7 +18,7 @@ echoerr() { echo "$@" 1>&2; }
 if [[  ]] && [[ $TOKEN ]] && [[ $APP ]]; 
 then
     echoerr "Hello ${USER}.  I will now delete $APP!"
-    curl -X DELETE -sku ":$TOKEN" https://foundation.iplantc.org/apps-v1/apps/$APP |json_xs -f json 
+    curl -X DELETE -sku "$IPLANTUSER:$TOKEN" https://foundation.iplantc.org/apps-v1/apps/$APP |json_xs -f json 
 else
     echoerr "You must provide a username, password, and JSON file name!"
 fi
