@@ -2,7 +2,7 @@
 user=$1
 app=$2
 
-if [[ !  ]];then
+if [[ ! $IPLANTUSER ]];then
     read -p "iPlant username: " USER
 fi
 

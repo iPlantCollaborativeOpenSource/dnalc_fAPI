@@ -3,7 +3,7 @@ use strict;
 my $cluster = shift || die "I need a cluster name\n";
 my $status  = uc(shift) || die "Cowardly: I need a status to kill\n";
 
-open IN, qq(curl  -sku "\$USER:\$TOKEN" https://foundation.iplantc.org/apps-v1/jobs/list | json_xs | grep '"status"\\|"id"\\|"software"' | grep -v success | perl -pe  's/^\\s+//' |sed 's/"sta/\\n"sta/' |);
+open IN, qq(curl  -sku "\$IPLANTUSER:\$TOKEN" https://foundation.iplantc.org/apps-v1/jobs/list | json_xs | grep '"status"\\|"id"\\|"software"' | grep -v success | perl -pe  's/^\\s+//' |sed 's/"sta/\\n"sta/' |);
 
 my ($stat,$id,$app);
 while (<IN>) {
