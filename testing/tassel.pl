@@ -1,10 +1,22 @@
 #!/usr/bin/perl
 use strict;
+
+use lib "/home/$ENV{USER}/lib";
+use lib "/home/$ENV{USER}/lib/perl5";
+
+unless ($ENV{IPLANTUSER} && $ENV{TOKEN}) {
+    print << 'DEATH';
+
+Error: Before running the test script, set the environmental variables $IPLANTUSER and $TOKEN.
+
+export IPLANTUSER=<your iPlant user id>
+export TOKEN=<your iPlant password or token>
+
+DEATH
+}
+
+
 use common::sense;
-
-use lib '/home/smckay/lib';
-
-use AnyEvent;
 use IO::File ();
 use File::Spec ();
 use iPlant::FoundationalAPI::Constants ':all';
@@ -13,12 +25,12 @@ use Data::Dumper;
 use File::Basename;
 
 use constant DEBUG => 0;
-use constant iPLANT_USER  => $ENV{USER};
+use constant iPLANT_USER  => $ENV{IPLANTUSER};
 use constant iPLANT_TOKEN => $ENV{TOKEN};
 
 my $cluster = shift || 'stampede';
 
-print "Logging on as user $ENV{USER}\n";
+print "Logging on as user $ENV{IPLANTUSER}\n";
 
 my $api_instance = iPlant::FoundationalAPI->new(
     debug => DEBUG,
@@ -28,7 +40,7 @@ my $api_instance = iPlant::FoundationalAPI->new(
 
 die "Can't auth.." unless $api_instance->auth;
 if ($api_instance->token eq kExitError) {
-    print STDERR "Can't authenticate!" , $/;								
+    print STDERR "Can't authenticate!" , $/;
 }
 
 print "Token: ", $api_instance->token, "\n";
@@ -70,7 +82,7 @@ my %params = (
     filterAlignMinFreq => '0.05',
     mlmCompressionLevel => 'Optimum',
     mlmMaxP => '1',
-    mlmVarCompEst => 'P3D'  
+    mlmVarCompEst => 'P3D'
     );
 
 
@@ -89,19 +101,17 @@ unless ($job_id) {
 
 print STDERR  "Polling for job status..", $/;
 
-my $i = 40;
-my $cv = AnyEvent->condvar;
-my $w = AnyEvent->timer (after => 30, interval => 30,
-			 cb => sub {
-			     my $st = $job_ep->job_details($job_id);
-			     $i--;
-			     $cv->send($job_id) if $st->{status} =~ /FINISHED$/;
-			     $cv->send unless $i;
-			     print $job_id, "\t", $st->{status}, $/;
-			 }
-    );
+my $i = 20;
 
-my ($file_list_path) = $cv->recv;
+while ($i) {
+    my $st = $job_ep->job_details($job_id);
+    my $stat = $job_id. "\t". $st->{status}. "\t" . `date`;
+    print $stat;
+    last if $stat =~ /FINISHED/;
+    $i--;
+    sleep 30;
+}
 
-undef $w;
+
+
 
