@@ -1,5 +1,5 @@
 #!/bin/bash
-if [[ ! $USER ]];then
+if [[ !  ]];then
     read -p "iPlant username: " USER
 fi
 

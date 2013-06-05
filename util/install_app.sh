@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [[ ! $USER ]];then
+if [[ !  ]];then
     read -p "iPlant username: " USER
 fi
 
@@ -16,10 +16,10 @@ fi
 
 echoerr() { echo "$@" 1>&2; }
 
-if [[ $USER ]] && [[ $TOKEN ]] && [[ $JSON ]]; 
+if [[  ]] && [[ $TOKEN ]] && [[ $JSON ]]; 
 then
     echoerr "Hello ${USER}. I will now install $JSON."
-    curl -X POST -sku "$USER:$TOKEN" -F "fileToUpload=@$JSON" https://foundation.iplantc.org/apps-v1/apps/ |json_xs -f json
+    curl -X POST -sku ":$TOKEN" -F "fileToUpload=@$JSON" https://foundation.iplantc.org/apps-v1/apps/ |json_xs -f json
 else
     echoerr "You must provide a username, password, and JSON file name!"
 fi

@@ -1,5 +1,5 @@
 #!/bin/bash
-if [[ ! $USER ]];then
+if [[ !  ]];then
     read -p "iPlant username: " USER
 fi
 
@@ -10,5 +10,5 @@ fi
 for job in "$@"
 do
     echo "OK, I will kill job $job"
-    curl -X DELETE -sku "$USER:$TOKEN" https://foundation.iplantc.org/apps-v1/job/$job |json_xs 
+    curl -X DELETE -sku ":$TOKEN" https://foundation.iplantc.org/apps-v1/job/$job |json_xs 
 done
