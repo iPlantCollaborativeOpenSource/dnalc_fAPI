@@ -16,4 +16,4 @@ print $CP;
 print "\n";
 my @args = @ARGV;
 
-system "java -d64 -Xms512m -Xmx1g -classpath '$CP' net.maizegenetics.pipeline.TasselPipeline @args";
+system "java -d64 -Xms2g -Xmx20g -classpath '$CP' net.maizegenetics.pipeline.TasselPipeline @args";
