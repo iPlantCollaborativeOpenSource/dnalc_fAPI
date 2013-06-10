@@ -1,0 +1,5 @@
+param	value
+cmd_line	cuffdiff --no-update-check --num-threads 16 --output-dir ./cuffdiff_out --library-type fr-unstranded --min-alignment-count 5 --labels foo,bar,baz --total-hits-norm --poisson-dispersion -b genome.fas ./cuffmerge_out/merged_with_ref_ids.gtf WT_rep1.bam,WT_rep2.bam hy5_rep1.bam,hy5_rep2.bam hy5_rep1.bam,hy5_rep2.bam 
+version	2.1.1
+SVN_revision	4046M
+boost_version	104900

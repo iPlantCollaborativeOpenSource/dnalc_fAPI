@@ -1,0 +1,7 @@
+file	condition	replicate_num	total_mass	norm_mass	internal_scale	external_scale
+WT_rep1.bam	foo	0	1.27659e+06	1.45912e+06	1.11275	1
+WT_rep2.bam	foo	1	1.27478e+06	1.45912e+06	1.1089	1
+hy5_rep1.bam	bar	0	1.5631e+06	1.45912e+06	0.963492	1
+hy5_rep2.bam	bar	1	1.56371e+06	1.45912e+06	0.972081	1
+hy5_rep1.bam	baz	0	1.5631e+06	1.45912e+06	0.963492	1
+hy5_rep2.bam	baz	1	1.56371e+06	1.45912e+06	0.972081	1

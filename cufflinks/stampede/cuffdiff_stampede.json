@@ -1,5 +1,5 @@
 {
-    "name": "dnalc-cuffdiff-stampede",
+    "name": "dnalc-cuffdiff-stampede-test",
     "parallelism": "serial",
     "version": "2.1.1",
     "helpURI": "http://cufflinks.cbcb.umd.edu/",

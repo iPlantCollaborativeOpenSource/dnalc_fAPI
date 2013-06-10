@@ -1,6 +1,8 @@
 # A little function to print to STDERR
 echoerr() { echo "$@" 1>&2; }
 
+JOB=${jobName}
+
 # GTF files to merge
 QUERY1=${query1}
 QUERY2=${query2}
@@ -587,7 +589,7 @@ echoerr "Done!"
 
 echoerr "Sorting output data...
 "
-cuffdiff_sort.pl $path $LABELS
+cuffdiff_sort.pl $path $LABELS $JOB
 
 echoerr "Done!"
 

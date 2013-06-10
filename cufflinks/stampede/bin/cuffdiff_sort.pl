@@ -4,8 +4,11 @@ use Data::Dumper;
 
 my (%desc);
 
-my $path = shift;
-my $labels = shift;
+my $usage = "cuffdiff_sort.pl PATH LABELS JOBNAME";
+my $path   = shift or die $usage;
+my $labels = shift or die $usage;
+my $job    = shift or die $usage;
+
 my @labels = split(',',$labels);
 
 my @pairs;
@@ -162,8 +165,8 @@ sub screen_file {
   <div id="export-csv">
    <a href="$export"><img src="/images/v2/csv.jpg" align="middle"> Export data to spreadsheet</a>
   </div>
-  <h2>$thing sorted by $sorted_by</h2>
-  <table id=”cd_table” cellspacing=0>
+  <h2>Samples $s1,$s2:$thing sorted by $sorted_by</h2>
+  <table id="cd_table" cellspacing=0>
   <thead>
 END
 ;
@@ -186,23 +189,24 @@ END
 	}
 	print HTML $_;
     }
-    
-    print HTML <<'END';
+   
+    my $column = $thing eq 'Genes' ? 4 : 5; 
+    print HTML <<"END";
    </tbody>
   </table>
   <script language="Javascript" type="text/javascript">
-    $(document).ready(function() {
-      var table = $("#cd_table").dataTable({
-              "aoColumnDefs": [
-                  { "bSortable": false, "aTargets": [ 2, 3 ] },
-              ],
+    \$(document).ready(function() {
+      var table = \$("#cd_table").dataTable({
+              //"aoColumnDefs": [
+              //    { "bSortable": false, "aTargets": [ 2, 3 ] },
+              //],
               "bPaginate": false,
               "sScrollY": "250px",
               "sDom": "frtiS",
               "bDeferRender": true,
 	  				 });
-          // sort by column 6 (fpkm) descending on load
-	  	  table.fnSort( [ [ 6, 'desc'] ] );
+          // sort by column $column (fpkm) descending on load
+	  	  table.fnSort( [ [ $column, 'desc'] ] );
  
       });
   </script>

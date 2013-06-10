@@ -1,0 +1,6 @@
+cd444_genes_1_summary.csv	cd444_genes_1_summary.html	foo	bar
+cd444_transcripts_1_summary.csv	cd444_transcripts_1_summary.html	foo	bar
+cd444_genes_2_summary.csv	cd444_genes_2_summary.html	foo	baz
+cd444_transcripts_2_summary.csv	cd444_transcripts_2_summary.html	foo	baz
+cd444_genes_3_summary.csv	cd444_genes_3_summary.html	bar	baz
+cd444_transcripts_3_summary.csv	cd444_transcripts_3_summary.html	bar	baz
