@@ -16,14 +16,10 @@ use constant DEBUG => 0;
 use constant iPLANT_USER  => $ENV{USER};
 use constant iPLANT_TOKEN => $ENV{TOKEN};
 
-my $cluster = shift || 'stampede';
-
-print "Logging on as user $ENV{USER}\n";
-
 my $api_instance = iPlant::FoundationalAPI->new(
     debug => DEBUG,
     user  => iPLANT_USER,
-    token => shift || iPLANT_TOKEN,
+    token => iPLANT_TOKEN,
     );
 
 die "Can't auth.." unless $api_instance->auth;
@@ -33,14 +29,18 @@ if ($api_instance->token eq kExitError) {
 
 print "Token: ", $api_instance->token, "\n";
 
+my $cluster = shift || 'stampede';
+my $version = shift || '2.1.1';
+
 my $apps = $api_instance->apps;
-my ($cl) = $apps->find_by_name("dnalc-fastqc-$cluster");
+my @apps = $apps->find_by_name("cuffmerge-$cluster");
+my ($cl) = grep {/$version$/} @apps;
 if ($cl) {
     print "Found App ", $cl->name, "\n";
     print STDERR Dumper( $cl ), $/ if DEBUG;
 }
 else {
-    print STDERR  "App [fastqc] not found!!", $/;
+    print STDERR  "App [cuffmerge] not found!!", $/;
     exit -1;
 }
 
@@ -55,13 +55,17 @@ $job_ep->debug(DEBUG);
 my $job_id;
 
 my %params = (
-    jobName => 'fastqc',
+    jobName => "cuffmerge",
     archive => 1,
-    archivePath => "/smckay/API_test/fastqc/$cluster\-$$",
+    archivePath => "/smckay/API_test/cuffmerge/$cluster\-$$",
     processors => 1,
     requestedTime => '01:00:00',
-    softwareName => $cl->name,
-    input => '/smckay/fastq/WT_rep1.fastq',
+    softwareName  => $cl->name,
+    ref_seq => "/shared/iplant_DNA_subway/genomes/arabidopsis_thaliana/genome.fas",
+    query1 => "/smckay/cufflinks_test/hy5_rep1-fx386-th900-cl96.gtf",
+    query2 => "/smckay/cufflinks_test/hy5_rep2-fx920-th856-cl55.gtf",
+    query3 => "/smckay/cufflinks_test/WT_rep1-fx282-th294-cl44.gtf",
+    query4 => "/smckay/cufflinks_test/WT_rep2-fx790-th268-cl31.gtf"
     );
 
 my $job = $job_ep->submit_job($cl, %params), $/;

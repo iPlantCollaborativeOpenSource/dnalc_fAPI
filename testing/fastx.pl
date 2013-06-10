@@ -91,19 +91,14 @@ unless ($job_id) {
 
 print STDERR  "Polling for job status..", $/;
 
-my $i = 40;
-my $cv = AnyEvent->condvar;
-my $w = AnyEvent->timer (after => 30, interval => 30,
-			 cb => sub {
-			     my $st = $job_ep->job_details($job_id);
-			     $i--;
-			     $cv->send($job_id) if $st->{status} =~ /FINISHED$/;
-			     $cv->send unless $i;
-			     print $job_id, "\t", $st->{status}, "\t", `date`;
-			 }
-    );
+my $i = 20;
 
-my ($file_list_path) = $cv->recv;
-
-undef $w;
+while ($i) {
+    my $st = $job_ep->job_details($job_id);
+    my $stat = $job_id. "\t". $st->{status}. "\t" . `date`;
+    print $stat;
+    last if $stat =~ /FINISHED/;
+    $i--;
+    sleep 30;
+}
 

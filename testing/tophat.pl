@@ -17,6 +17,7 @@ use constant iPLANT_USER  => $ENV{USER};
 use constant iPLANT_TOKEN => $ENV{TOKEN};
 
 my $cluster = shift || 'stampede';
+my $version = shift || '2.0.8u2';
 
 my $api_instance = iPlant::FoundationalAPI->new(
     debug => DEBUG,
@@ -32,11 +33,11 @@ if ($api_instance->token eq kExitError) {
 print "Token: ", $api_instance->token, "\n";
 
 my $apps = $api_instance->apps;
-my @apps = $apps->find_by_name("dnalc-tophat-$cluster-2.0.8");
+my @apps = $apps->find_by_name("dnalc-tophat-$cluster");
 if (@apps > 1) {
     print Dumper [map {$_->id} @apps]
 }
-my $cl = shift @apps;
+my ($cl) = grep {/$version$/} @apps;
 if ($cl) {
     print "Found App ", $cl->name, "\n";
     print STDERR Dumper( $cl ), $/ if DEBUG;
@@ -97,19 +98,13 @@ unless ($job_id) {
 
 print STDERR  "Polling for job status..", $/;
 
-my $i = 40;
-my $cv = AnyEvent->condvar;
-my $w = AnyEvent->timer (after => 30, interval => 30,
-			 cb => sub {
-			     my $st = $job_ep->job_details($job_id);
-			     $i--;
-			     $cv->send($job_id) if $st->{status} =~ /FINISHED$/;
-			     $cv->send unless $i;
-			     print $job_id, "\t", $st->{status}, "\t\t", `date`;
-			 }
-    );
+my $i = 20;
 
-my ($file_list_path) = $cv->recv;
-
-undef $w;
-
+while ($i) {
+    my $st = $job_ep->job_details($job_id);
+    my $stat = $job_id. "\t". $st->{status}. "\t" . `date`;
+    print $stat;
+    last if $stat =~ /FINISHED/;
+    $i--;
+    sleep 30;
+}

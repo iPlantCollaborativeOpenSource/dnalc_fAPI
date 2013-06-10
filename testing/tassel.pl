@@ -46,7 +46,7 @@ if ($api_instance->token eq kExitError) {
 print "Token: ", $api_instance->token, "\n";
 
 my $apps = $api_instance->apps;
-my ($cl) = $apps->find_by_name("tassel-$cluster");
+my ($cl) = $apps->find_by_name("tassel_mlm-$cluster");
 if ($cl) {
     print "Found App ", $cl->name, "\n";
     print STDERR Dumper( $cl ), $/ if DEBUG;
