@@ -16,7 +16,7 @@ fi
 
 echoerr() { echo "$@" 1>&2; }
 
-if [[  ]] && [[ $TOKEN ]] && [[ $JSON ]]; 
+if [[ $IPLANTUSER ]] && [[ $TOKEN ]] && [[ $JSON ]]; 
 then
     echoerr "Hello ${USER}. I will now install $JSON."
     curl -X POST -sku "$IPLANTUSER:$TOKEN" -F "fileToUpload=@$JSON" https://foundation.iplantc.org/apps-v1/apps/ |json_xs -f json

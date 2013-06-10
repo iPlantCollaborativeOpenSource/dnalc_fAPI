@@ -15,7 +15,7 @@ fi
 
 echoerr() { echo "$@" 1>&2; }
 
-if [[  ]] && [[ $TOKEN ]] && [[ $APP ]]; 
+if [[ $IPLANTUSER  ]] && [[ $TOKEN ]] && [[ $APP ]]; 
 then
     echoerr "Hello ${USER}.  I will now delete $APP!"
     curl -X DELETE -sku "$IPLANTUSER:$TOKEN" https://foundation.iplantc.org/apps-v1/apps/$APP |json_xs -f json 
