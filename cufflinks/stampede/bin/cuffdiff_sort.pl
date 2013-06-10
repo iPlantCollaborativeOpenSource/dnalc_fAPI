@@ -7,7 +7,6 @@ my (%desc);
 my $usage = "cuffdiff_sort.pl PATH LABELS JOBNAME";
 my $path   = shift or die $usage;
 my $labels = shift or die $usage;
-my $job    = shift or die $usage;
 
 my @labels = split(',',$labels);
 

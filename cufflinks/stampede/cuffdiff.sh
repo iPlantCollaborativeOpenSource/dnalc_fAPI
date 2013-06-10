@@ -589,7 +589,7 @@ echoerr "Done!"
 
 echoerr "Sorting output data...
 "
-cuffdiff_sort.pl $path $LABELS $JOB
+cuffdiff_sort.pl $path $LABELS
 
 echoerr "Done!"
 
