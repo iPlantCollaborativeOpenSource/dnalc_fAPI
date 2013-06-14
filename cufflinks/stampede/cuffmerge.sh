@@ -1,5 +1,5 @@
 #!/bin/bash
-#jobName=sheldon
+#jobName=cftest
 #ref_seq=/iplant/home/shared/iplant_DNA_subway/genomes/arabidopsis_thaliana/genome.fas
 #query1=/iplant/home/smckay/cufflinks_test/hy5_rep1-fx386-th900-cl96.gtf
 #query2=/iplant/home/smckay/cufflinks_test/hy5_rep2-fx920-th856-cl55.gtf
@@ -46,6 +46,7 @@ THREADS=$(cat /proc/cpuinfo | grep processor | wc -l)
 MANIFEST='manifest.txt'
 touch $MANIFEST
 
+MERGED=
 for i in $(seq 0 1 12)
 do
     echoerr $i
@@ -55,6 +56,7 @@ do
 	iget -fT $file
 	if [[ -s $infile ]]; then
 	    echo $infile >> $MANIFEST
+	    MERGED="$MERGED $infile" 
 	    echoerr $infile
 	fi
     fi
@@ -85,7 +87,28 @@ if [[ -n $lines ]]; then
   echoerr "DONE!
   $MERGEDONE                                                                                                                                                  "
 
-  cp $output_dir/merged.gtf $output_dir/${JOB}-merged.gtf
+  mv $output_dir/merged.gtf $output_dir/${JOB}-merged.gtf
 fi
 
+echo "Merged Cufflinks transcript files: $MERGED" > $output_dir/description.txt
+
+# Make bam file from GTF
+gtf="${output_dir}/${JOB}-merged.gtf"
+sam="${output_dir}/${JOB}-merged.sam"
+bam="${output_dir}/${JOB}-merged"
+gtf_to_sam $gtf $sam
+samtools faidx $seq
+samtools view -b -h -t $seq.fai -o $bam.unsorted.bam $sam
+samtools sort $bam.unsorted.bam $bam
+samtools index $bam.bam
+
+# make gff3 file from GTF
+export PERL5LIB=${CWD}/bin/lib
+gff="${output_dir}/${JOB}-merged.gff"
+cufflinks_gtf2gff3.pl $gtf > $gff
+
+
 # remember to remove cruft
+rm -f *.gtf *.fa* *.tgz *.txt
+rm -f $output_dir/*sam $output_dir/*unsorted*
+rm -fr bin
