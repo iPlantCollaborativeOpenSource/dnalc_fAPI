@@ -4,7 +4,7 @@ use Data::Dumper;
 
 my (%desc);
 
-my $usage = "cuffdiff_sort.pl PATH LABELS JOBNAME";
+my $usage = "cuffdiff_sort.pl PATH LABELS\n";
 my $path   = shift or die $usage;
 my $labels = shift or die $usage;
 
@@ -93,7 +93,7 @@ sub screen_file {
     close TXT;
     open  TXT , "| sort $index | perl -pe 's/\t/,/g' >>$outfile.csv";
 
-    open IN, $infile or die $!;
+    open IN, $infile or die "Could not open $infile for writing: $!";
     my ($out,@out);
     while (<IN>) {
 	chomp;
@@ -164,7 +164,7 @@ sub screen_file {
   <div id="export-csv">
    <a href="$export"><img src="/images/v2/csv.jpg" align="middle"> Export data to spreadsheet</a>
   </div>
-  <h2>Samples $s1,$s2:$thing sorted by $sorted_by</h2>
+  <h2>$thing sorted by $sorted_by</h2>
   <table id="cd_table" cellspacing=0>
   <thead>
 END
