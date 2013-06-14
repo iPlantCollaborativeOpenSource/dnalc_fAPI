@@ -1,9 +1,0 @@
-/home/smckay/bin/cuffmerge -p 24 -o ./cuffmerge_out -s genome.fas manifest.txt
-gtf_to_sam -F hy5_rep1-fx386-th900-cl96.gtf ./cuffmerge_out/tmp/gtf2sam_fileVKtlfu
-gtf_to_sam -F hy5_rep2-fx920-th856-cl55.gtf ./cuffmerge_out/tmp/gtf2sam_filejrzIpc
-gtf_to_sam -F WT_rep1-fx282-th294-cl44.gtf ./cuffmerge_out/tmp/gtf2sam_filePf4qSW
-gtf_to_sam -F WT_rep2-fx790-th268-cl31.gtf ./cuffmerge_out/tmp/gtf2sam_file5Hi7jJ
-sort -k 3,3 -k 4,4n --temporary-directory=./cuffmerge_out/tmp/ ./cuffmerge_out/tmp/gtf2sam_fileVKtlfu ./cuffmerge_out/tmp/gtf2sam_filejrzIpc ./cuffmerge_out/tmp/gtf2sam_filePf4qSW ./cuffmerge_out/tmp/gtf2sam_file5Hi7jJ > ./cuffmerge_out/tmp/mergeSam_fileZIn3Gx
-cufflinks -o ./cuffmerge_out/ -F 0.05 -q --overhang-tolerance 200 --library-type=transfrags -A 0.0 --min-frags-per-transfrag 0 --no-5-extend -p 24 ./cuffmerge_out/tmp/mergeSam_fileZIn3Gx
-cuffcompare -o tmp_meta_asm -C -G  -s genome.fas ./cuffmerge_out//transcripts.gtf
-cuffcompare -o tmp_meta_asm -C -G  -s genome.fas ./cuffmerge_out//merged.gtf
