@@ -1,13 +1,13 @@
 {
-    "name": "dnalc-cuffdiff-stampede-test",
+    "name": "dnalc-cuffdiff-stampede",
     "parallelism": "serial",
     "version": "2.1.1",
     "helpURI": "http://cufflinks.cbcb.umd.edu/",
-    "label": "Cufflinks",
+    "label": "Cuffdiff",
     "shortDescription": "Find significant changes in transcript expression, splicing, and promoter use.",
     "longDescription": "",
     "author": "Sheldon McKay",
-    "datePublished": "April 19, 2013",
+    "datePublished": "June 13, 2013",
     "tags": [
         "next-gen",
         "assembly",

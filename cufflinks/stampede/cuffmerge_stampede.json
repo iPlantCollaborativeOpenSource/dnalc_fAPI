@@ -3,11 +3,11 @@
     "parallelism": "serial",
     "version": "2.1.1",
     "helpURI": "http://cufflinks.cbcb.umd.edu/",
-    "label": "CuffLinks",
+    "label": "CuffMerge",
     "shortDescription": "Transcript assembly and merge for RNA-Seq data",
     "longDescription": "",
     "author": "Sheldon McKay",
-    "datePublished": "June 7, 2013",
+    "datePublished": "June 13, 2013",
     "tags": [
         "next-gen",
         "assembly",
@@ -25,7 +25,8 @@
     "modules": [
         "purge",
         "load TACC",
-        "load irods"
+        "load irods",
+	"load samtools"
     ],
     "inputs": [
         {
@@ -334,7 +335,7 @@
                     "xs:string"
                 ]
             }
-        }	  
+        }
     ],
     "outputs": []
 }

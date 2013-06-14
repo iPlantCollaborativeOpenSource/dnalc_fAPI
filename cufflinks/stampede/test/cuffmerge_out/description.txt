@@ -1,0 +1,1 @@
+Merged Cufflinks transcript files:  hy5_rep1-fx386-th900-cl96.gtf hy5_rep2-fx920-th856-cl55.gtf WT_rep1-fx282-th294-cl44.gtf WT_rep2-fx790-th268-cl31.gtf
